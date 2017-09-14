@@ -1,6 +1,10 @@
 class UsersController < Clearance::UsersController
+  def new
+    @user = User.new
+  end
+
   def create
-    @user = user_from_params
+    @user = User.new(user_from_params)
 
     if @user.save
       sign_in @user
@@ -9,5 +13,19 @@ class UsersController < Clearance::UsersController
     else
       render :new
     end
+  end
+
+  private
+
+  def user_from_params
+    params.require(:user).permit(:email,
+      :password,
+      :first_name,
+      :last_name,
+      :street_number,
+      :zip,
+      :city,
+      :situation,
+      :technical_informations)
   end
 end
