@@ -10,33 +10,31 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: /\A.*@.*\.com\z/ }, uniqueness: true
 
   aasm do
-    state :loaded, :initial => true
-    state :profile_details
-    state :technical_details
+    state :first_step_of_form, :initial => true
+    state :second_step_of_form
+    state :form_is_completed
 
-    event :fill_basic_info do
-      transitions :from => :loaded, :to => :profile_details, :guard => Proc.new { |o|
-      o.valid?
-    }
+    event :fill_the_first_step_of_form do
+      transitions :from => :first_step_of_form, :to => :second_step_of_form
     end
 
-    event :fill_skills do
-      transitions :from => :profile_details, :to => :technical_details
+    event :fill_the_second_step_of_form do
+      transitions :from => :second_step_of_form, :to => :form_is_completed
     end
 
 
     event :previous_step do
-      transitions :from => :technical_details, :to => :profile_details
-      transitions :from => :profile_details, :to => :loaded
+      transitions :from => :form_is_completed, :to => :second_step_of_form
+      transitions :from => :second_step_of_form, :to => :first_step_of_form
     end
   end
 
   def change_ad_next_state
     case self.aasm_state
-    when 'loaded'
-      fill_basic_info
-    when 'profile_details'
-      fill_skills
+    when 'first_step_of_form'
+      fill_the_first_step_of_form
+    when 'second_step_of_form'
+      fill_the_second_step_of_form
     end
   end
 end
