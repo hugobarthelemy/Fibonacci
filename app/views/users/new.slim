@@ -1,19 +1,9 @@
 div id='marketing'
   div id='sign_up' class='card'
-    h1 Personnal informations
-    = simple_form_for @user, class:'mt-5' do |f|
-      - if @user.first_step_of_form?
-        = f.input :email, label: 'Email'
-        = f.input :password, label: 'Password', placeholder: 'Minimum 6 characters'
-        = f.input :first_name, label: 'First name'
-        = f.input :last_name, label: 'Last name'
-        = f.input :street_number, label: 'Number'
-        = f.input :street, label: 'Street'
-        = f.input :zip, label: 'Zip'
-        = f.input :city, label: 'City'
-        = f.button :submit, disabled: false, class: 'btn btn-outiline-success btn-lg'
-      - if @user.second_step_of_form?
-        = f.collection_check_boxes :situation, [["I move in"], ["I build a new flat/house"], ["I new a temporary access"]], :first, :last
-        = f.input :technical_informations, label: 'Technical informations'
-        = f.button :submit, disabled: false, class: 'btn btn-outiline-success btn-lg'
+    h1 Oops
+    h4 class='mt-3' This form is too simple,<br>you do a little coding and fix this !
 
+    = simple_form_for @user, class:'mt-5' do |f|
+      = f.input :email, label: false, placeholder: 'Email'
+      = f.input :password, label: false, placeholder: 'Password'
+      = f.button :submit, disabled: true, class: 'btn btn-outiline-success btn-lg'
