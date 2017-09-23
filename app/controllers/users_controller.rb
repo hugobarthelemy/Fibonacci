@@ -3,7 +3,6 @@ class UsersController < Clearance::UsersController
     # @user = User.new
     if session[:user_id].present?
        @user = User.find(session[:user_id])
-       # @user.build_situation && @user.build_technical_info
      else
        @user = User.new
      end
