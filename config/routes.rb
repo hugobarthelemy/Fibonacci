@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   end
 
   controller :users do
+
     resources :users, only: [:create, :update] do
+      get '/back_to_the_first_step_of_form' => :back_to_the_first_step_of_form
       resource :password, only: [:create, :edit, :update]
     end
     get '/sign_up' => :new, as: :sign_up

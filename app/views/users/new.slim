@@ -15,5 +15,6 @@ div id='marketing'
       - if @user.second_step_of_form?
         = f.collection_check_boxes :situation, [["I move in"], ["I build a new flat/house"], ["I new a temporary access"]], :first, :last
         = f.input :technical_informations, label: 'Technical informations'
+        = link_to "back", user_back_to_the_first_step_of_form_path(@user)
         = f.button :submit, disabled: false, class: 'btn btn-outiline-success btn-lg'
 
