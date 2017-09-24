@@ -1,11 +1,10 @@
 class UsersController < Clearance::UsersController
   def new
-    # @user = User.new
     if session[:user_id].present?
-       @user = User.find(session[:user_id])
-     else
-       @user = User.new
-     end
+      @user = User.find(session[:user_id])
+    else
+      @user = User.new
+    end
   end
 
   def create
@@ -25,37 +24,39 @@ class UsersController < Clearance::UsersController
   def update
     @user = User.find(params[:id])
     if @user.first_step_of_form?
+      @user.update_attributes!(user_params)
       @user.fill_the_first_step_of_form!
       redirect_to sign_up_path(@user)
     elsif @user.second_step_of_form?
       @user.fill_the_second_step_of_form!
       sign_in @user
       session[:user_id] = nil
+      @user.update_attributes!(user_params)
       redirect_back_or url_after_create
     end
-    @user.update_attributes(user_params)
   end
 
-  def previous_step
-    @user = User.find(params[:id])
-    if !@user.loaded? && @user.previous_step && @user.save
-      redirect_to edit_user_path(@user)
-    else
-      redirect_to :back
-    end
+  def back_to_the_first_step_of_form
+    @user = User.find(session[:user_id])
+    @user.back_to_the_first_step_fo_form!
+    redirect_to sign_up_path
   end
 
   private
 
     def user_params
-      params.require(:user).permit(:email,
+      user_params = params.require(:user).permit(:user_id,
+        :email,
         :password,
         :first_name,
         :last_name,
         :street_number,
+        :street,
         :zip,
         :city,
         :situation,
         :technical_informations)
+      user_params.delete(:password) unless user_params[:password].present?
+      user_params
     end
 end
