@@ -49,7 +49,10 @@ group :development, :test do
   gem 'guard', '~> 2.14', '>= 2.14.1'
   gem 'guard-rubocop', '~> 1.3'
   gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'capybara'
+  gem 'selenium-webdriver'
 end
 
 group :development do
