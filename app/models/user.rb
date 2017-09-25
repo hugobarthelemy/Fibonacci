@@ -33,8 +33,15 @@ class User < ApplicationRecord
       fill_the_first_step_of_form
     when 'second_step_of_form'
       fill_the_second_step_of_form
+      send_welcome_email
     when 'back_to_the_first_step_fo_form'
       back_to_the_first_step_fo_form
     end
+  end
+
+  private
+
+  def send_welcome_email
+    UserMailer.welcome(self).deliver_later
   end
 end
