@@ -48,6 +48,8 @@ group :development, :test do
   # Rubocop is a Ruby code style checking tool
   gem 'guard', '~> 2.14', '>= 2.14.1'
   gem 'guard-rubocop', '~> 1.3'
+  gem 'rspec-rails', '~> 3.5'
+  gem 'database_cleaner'
 end
 
 group :development do
